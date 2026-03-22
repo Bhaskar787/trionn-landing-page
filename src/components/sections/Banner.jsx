@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <>
       {/* Main Banner Section */}
-      <section className="tr__banner relative h-screen flex items-center overflow-hidden pt-32 lg:pt-40 xl:pt-48">
+      <section className="tr__banner relative h-screen flex items-center overflow-hidden pt-40 lg:pt-52 xl:pt-64">
         <div className="tr__container max-w-7xl mx-auto px-4 h-full flex items-center">
           <div className="tr__banner__content max-w-4xl">
             
