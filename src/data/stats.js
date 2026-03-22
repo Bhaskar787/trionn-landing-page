@@ -10,7 +10,7 @@ export const statsData = [
   },
   {
     id: 2,
-    number: '900',
+    number: '90',
     suffix: '+',
     label: 'projects\ncompleted',
     icon: '✅',

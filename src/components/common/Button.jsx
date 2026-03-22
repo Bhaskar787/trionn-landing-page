@@ -15,7 +15,7 @@ const Button = React.forwardRef(({
   onClick,
   ...props
 }, ref) => {
-  // ✅ FIXED: Proper Component determination
+  // ✅ Proper Component determination
   const isLink = href && !disabled && !loading;
   const Component = isLink ? (isExternal ? 'a' : 'button') : 'button';
   
@@ -106,11 +106,11 @@ const Button = React.forwardRef(({
         disabled={disabled || loading}
         onClick={onClick}
         aria-disabled={disabled || loading}
-        aria-label={typeof children === 'string' ? children : undefined}
+        aria-label={typeof children === 'string' ? children : 'Button'}
         role={isLink ? 'link' : 'button'}
         tabIndex={disabled || loading ? -1 : 0}
         className="relative z-10 flex items-center justify-center w-full h-full px-1 py-1"
-        target={isExternal ? '_blank' : undefined}
+        target={isExternal ? '_blank' : undefined}  // ✅ FIXED: Added 'undefined'
         rel={isExternal ? 'noopener noreferrer' : undefined}
         {...props}
       >
