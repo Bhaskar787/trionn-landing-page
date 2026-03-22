@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
+import { useRef, useEffect, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { useGesture } from '@use-gesture/react';
 
 // ✅ FIXED: Proper custom hook (moved outside component)

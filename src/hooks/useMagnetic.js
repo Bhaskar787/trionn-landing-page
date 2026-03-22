@@ -1,7 +1,7 @@
 import { useRef, useEffect, useCallback } from 'react';
 import { useGesture } from '@use-gesture/react';
 
-export const useMagnetic = (strength = 0.15, springConfig = { stiffness: 300, damping: 25 }) => {
+export const useMagnetic = (strength = 0.15 ) => {
   const ref = useRef(null);
   const isHovering = useRef(false);
   const targetPos = useRef({ x: 0, y: 0 });

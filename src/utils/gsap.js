@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import  { useState, useEffect, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Cursor from './components/common/Cursor';
 import CanvasBackground from './components/CanvasBackground';

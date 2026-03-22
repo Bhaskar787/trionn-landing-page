@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { motion } from 'framer-motion';
 import Magnetic from '../common/Magnetic';
 import Button from '../common/Button';
