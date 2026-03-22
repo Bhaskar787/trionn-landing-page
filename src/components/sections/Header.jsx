@@ -35,9 +35,9 @@ const Header = () => {
   return (
     <>
       <header 
-        className={`tr__header fixed top-6 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${
+        className={`tr__header fixed top-0 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-500 ${
           isScrolled 
-            ? 'w-[90vw] max-w-4xl backdrop-blur-xl bg-black/80 dark:bg-white/10 border border-white/10 dark:border-black/20 rounded-2xl py-4 px-8' 
+            ? 'w-[90vw] max-w-4xl backdrop-blur-xl bg-black/80 dark:bg-white/10 border border-white/10 dark:border-black/20 rounded-2xl py-4 px-8 mt-6' 
             : 'w-full'
         }`}
       >
