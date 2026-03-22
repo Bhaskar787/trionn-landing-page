@@ -16,7 +16,7 @@ const Cursor = () => {
   const hoverablesRef = useRef(new Set());
   const rafRef = useRef(null);
 
-  // ✅ FIXED: Proper mouse position update
+  // Mouse move
   const updateCursorPos = useCallback((state) => {
     const { clientX: x, clientY: y } = state.event;
     setCursorState(prev => ({ ...prev, x, y }));
@@ -24,38 +24,36 @@ const Cursor = () => {
 
   const handleHoverEnter = useCallback((e) => {
     const target = e.currentTarget;
-    if (target.classList.contains('tr__cursor__hoverable')) {
-      const customText = target.dataset.cursorText || '';
-      const customSize = target.dataset.cursorSize || '1';
-      
-      setCursorState(prev => ({
-        ...prev,
-        type: 'hover',
-        text: customText,
-        size: parseFloat(customSize)
-      }));
-      
-      target.classList.add('cursor-hovered');
-      hoverablesRef.current.add(target);
-    }
+
+    const customText = target.dataset.cursorText || '';
+    const customSize = target.dataset.cursorSize || '1';
+
+    setCursorState(prev => ({
+      ...prev,
+      type: 'hover',
+      text: customText,
+      size: parseFloat(customSize)
+    }));
+
+    target.classList.add('cursor-hovered');
+    hoverablesRef.current.add(target);
   }, []);
 
   const handleHoverLeave = useCallback((e) => {
     const target = e.currentTarget;
-    if (target.classList.contains('tr__cursor__hoverable')) {
-      setCursorState(prev => ({
-        ...prev,
-        type: 'default',
-        text: '',
-        size: 1
-      }));
-      
-      target.classList.remove('cursor-hovered');
-      hoverablesRef.current.delete(target);
-    }
+
+    setCursorState(prev => ({
+      ...prev,
+      type: 'default',
+      text: '',
+      size: 1
+    }));
+
+    target.classList.remove('cursor-hovered');
+    hoverablesRef.current.delete(target);
   }, []);
 
-  // ✅ FIXED: Proper gesture handlers
+  // Gesture
   useGesture(
     {
       onMouseMove: updateCursorPos,
@@ -64,53 +62,38 @@ const Cursor = () => {
       onMouseDown: () => setCursorState(prev => ({ ...prev, type: 'click' })),
       onMouseUp: () => setCursorState(prev => ({ ...prev, type: 'default' }))
     },
-    { 
+    {
       target: window,
       drag: { delay: 100 },
       eventOptions: { passive: true }
     }
   );
 
-  // ✅ FIXED: Single RAF loop (runs ONCE)
+  // RAF animation
   useEffect(() => {
-    let ticking = false;
+    const primary = primaryRef.current;
+    const secondary = secondaryRef.current;
+
+    if (!primary || !secondary) return;
 
     const updatePosition = () => {
-      const primary = primaryRef.current;
-      const secondary = secondaryRef.current;
-
-      if (!primary || !secondary) {
-        ticking = false;
-        return;
-      }
-
-      // Primary cursor
       primary.style.transform = `translate(${cursorState.x}px, ${cursorState.y}px) scale(${cursorState.size * (cursorState.type === 'hover' ? 2.5 : 1)})`;
 
-      // Secondary cursor  
       secondary.style.transform = `translate(${cursorState.x * 0.8}px, ${cursorState.y * 0.8}px) scale(${cursorState.size * (cursorState.type === 'hover' ? 1.8 : 1)})`;
+
       secondary.style.opacity = cursorState.type === 'hover' ? '1' : '0.4';
 
-      ticking = false;
+      rafRef.current = requestAnimationFrame(updatePosition);
     };
 
-    const raf = () => {
-      if (!ticking) {
-        ticking = true;
-        rafRef.current = requestAnimationFrame(updatePosition);
-      }
-    };
-
-    raf();
+    rafRef.current = requestAnimationFrame(updatePosition);
 
     return () => {
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current);
-      }
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [cursorState.x, cursorState.y, cursorState.size, cursorState.type]);
+  }, [cursorState]);
 
-  // ✅ FIXED: Event delegation
+  // Hover detection
   useEffect(() => {
     const handleMouseOver = (e) => {
       const target = e.target.closest('.tr__cursor__hoverable');
@@ -135,11 +118,13 @@ const Cursor = () => {
     };
   }, [handleHoverEnter, handleHoverLeave]);
 
-  // Cleanup ✅
+  // ✅ FIXED CLEANUP (IMPORTANT)
   useEffect(() => {
+    const hoverables = hoverablesRef.current; // ✅ store snapshot
+
     return () => {
-      hoverablesRef.current.forEach(el => el.classList.remove('cursor-hovered'));
-      hoverablesRef.current.clear();
+      hoverables.forEach(el => el.classList.remove('cursor-hovered'));
+      hoverables.clear();
     };
   }, []);
 
@@ -151,8 +136,8 @@ const Cursor = () => {
         className={`
           fixed pointer-events-none z-[99999] mix-blend-difference rounded-full shadow-lg
           transition-all duration-75 ease-out
-          ${cursorState.type === 'hover' 
-            ? 'w-[20px] h-[20px] border-2 border-white/70 bg-gradient-to-r from-orange-400/90 to-pink-400/90 shadow-orange-500/60' 
+          ${cursorState.type === 'hover'
+            ? 'w-[20px] h-[20px] border-2 border-white/70 bg-gradient-to-r from-orange-400/90 to-pink-400/90 shadow-orange-500/60'
             : 'w-[12px] h-[12px] bg-white shadow-white/70'
           }
           ${cursorState.type === 'click' ? 'shadow-red-500/70 scale-125' : ''}
@@ -167,8 +152,8 @@ const Cursor = () => {
         className={`
           fixed pointer-events-none z-[99998] rounded-full backdrop-blur-xl border-2
           transition-all duration-200 ease-out
-          ${cursorState.type === 'hover' 
-            ? 'w-[48px] h-[48px] border-white/60 shadow-2xl shadow-orange-500/40 scale-125 opacity-100' 
+          ${cursorState.type === 'hover'
+            ? 'w-[48px] h-[48px] border-white/60 shadow-2xl shadow-orange-500/40 scale-125 opacity-100'
             : 'w-[40px] h-[40px] border-white/30 shadow-lg shadow-white/20 opacity-50 scale-100'
           }
         `}

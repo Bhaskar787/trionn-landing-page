@@ -3,12 +3,10 @@ import { motion } from 'framer-motion';
 
 const CanvasBackground = () => {
   const canvasRef = useRef(null);
-  const ctxRef = useRef(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext('2d');
-    ctxRef.current = ctx;
 
     // Set canvas size
     const resizeCanvas = () => {
@@ -19,7 +17,6 @@ const CanvasBackground = () => {
 
     window.addEventListener('resize', resizeCanvas);
 
-    // Fluid animation particles
     const particles = [];
     const mouse = { x: 0, y: 0 };
 
@@ -44,7 +41,7 @@ const CanvasBackground = () => {
         const dx = mouse.x - this.x;
         const dy = mouse.y - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (distance < 100) {
           this.vx += dx * 0.02;
           this.vy += dy * 0.02;
@@ -55,7 +52,7 @@ const CanvasBackground = () => {
         this.x += this.speedX + this.vx;
         this.y += this.speedY + this.vy;
 
-        // Wrap around edges
+        // Wrap edges
         if (this.x > canvas.width) this.x = 0;
         if (this.x < 0) this.x = canvas.width;
         if (this.y > canvas.height) this.y = 0;
@@ -76,7 +73,7 @@ const CanvasBackground = () => {
       }
     }
 
-    // Initialize particles
+    // Init particles
     for (let i = 0; i < 100; i++) {
       particles.push(new Particle());
     }
@@ -87,20 +84,9 @@ const CanvasBackground = () => {
       mouse.y = e.clientY;
     };
 
-    // Animation loop
-    const animate = () => {
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    document.addEventListener('mousemove', handleMouseMove);
 
-      particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-      });
-
-      requestAnimationFrame(animate);
-    };
-
-    // Connect nearby particles
+    // ✅ FIXED: now USED inside animate
     const drawConnections = () => {
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
@@ -120,15 +106,32 @@ const CanvasBackground = () => {
       }
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
+    let animationFrameId;
+    let frame = 0;
+
+    const animate = () => {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach((particle) => {
+        particle.update();
+        particle.draw();
+      });
+
+      // ✅ FIX: now used (no ESLint error)
+      if (frame % 2 === 0) drawConnections(); // performance optimized
+      frame++;
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
     animate();
 
     // Cleanup
     return () => {
       window.removeEventListener('resize', resizeCanvas);
       document.removeEventListener('mousemove', handleMouseMove);
-      canvas.width = 1;
-      canvas.height = 1;
+      cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
