@@ -1,0 +1,245 @@
+/* ==========================================================================
+   app.css - TRIONN APP-WIDE (CURSOR FIXED + PERFECT)
+   ========================================================================== */
+
+/* App-wide Styles */
+.app {
+  isolation: isolate;
+}
+
+.main-content {
+  min-height: 100vh;
+  position: relative;
+  z-index: 10;
+}
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent Flash of Unstyled Content */
+body {
+  background: #000;
+}
+
+/* Loading States */
+.loading .main-content,
+.loading .cursor--primary,
+.loading .cursor--secondary {
+  display: none !important;
+}
+
+/* ==========================================================================
+   SECTION SPACING (Perfect!)
+   ========================================================================== */
+.tr__section {
+  position: relative;
+}
+
+.tr__section:not(:first-child) {
+  padding-top: 10rem;
+  padding-bottom: 10rem;
+}
+
+@media (min-width: 1024px) {
+  .tr__section:not(:first-child) {
+    padding-top: 15rem;
+    padding-bottom: 15rem;
+  }
+}
+
+/* Container Max Widths */
+.tr__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   TYPOGRAPHY SCALE (Production Ready)
+   ========================================================================== */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  font-variation-settings: 'wght' 800;
+}
+
+h1 { font-size: clamp(3rem, 8vw, 6rem); }
+h2 { font-size: clamp(2.5rem, 6vw, 4.5rem); }
+h3 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h4 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+h5 { font-size: clamp(1.25rem, 3vw, 2rem); }
+
+/* ==========================================================================
+   RESPONSIVE IMAGES + VIDEO
+   ========================================================================== */
+img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.tr__video__wrapper video {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ==========================================================================
+   CURSOR SYSTEM (React-Controlled - FIXED)
+   ========================================================================== */
+/* ✅ FIXED: NO cursor: none - React Manages */
+.tr__cursor__hoverable {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  isolation: isolate;
+  will-change: transform;
+}
+
+.tr__cursor__hoverable.cursor-hovered {
+  transform: scale(1.05) !important;
+  filter: drop-shadow(0 20px 40px rgba(255,147,0,0.4)) brightness(1.15) !important;
+}
+
+/* 🎯 Cursor Elements Support */
+.cursor--primary,
+.cursor--secondary {
+  position: fixed !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
+  contain: layout style paint !important;
+  will-change: transform !important;
+}
+
+/* ==========================================================================
+   BUTTON HOVER STATES
+   ========================================================================== */
+.button {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.button::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: left 0.6s;
+  z-index: 1;
+}
+
+.button:hover::after {
+  left: 100%;
+}
+
+/* ==========================================================================
+   MAGNETIC ELEMENTS
+   ========================================================================== */
+.tr__magnetic {
+  will-change: transform;
+  contain: layout style paint;
+  isolation: isolate;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ==========================================================================
+   RESPONSIVE CONTAINERS
+   ========================================================================== */
+@media (max-width: 640px) {
+  .container,
+  .tr__container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container,
+  .tr__container {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT STYLES
+   ========================================================================== */
+@media print {
+  .no-print,
+  .cursor--primary,
+  .cursor--secondary,
+  canvas:not(.cursor--primary):not(.cursor--secondary) {
+    display: none !important;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION (Cursor Safe)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .tr__cursor__hoverable.cursor-hovered {
+    transform: scale(1.02) !important;
+    filter: brightness(1.1) !important;
+  }
+}
+
+/* ==========================================================================
+   MOBILE TOUCH SAFETY (Critical!)
+   ========================================================================== */
+@media (hover: none) and (pointer: coarse) {
+  .tr__cursor__hoverable {
+    transition-duration: 0.1s !important;
+  }
+  
+  .cursor--primary,
+  .cursor--secondary {
+    display: none !important;
+  }
+  
+  .tr__section:not(:first-child) {
+    padding-top: 6rem !important;
+    padding-bottom: 6rem !important;
+  }
+}
+
+/* ==========================================================================
+   CURSOR-SAFE ANIMATION FIX (Critical!)
+   ========================================================================== */
+.tr__cursor__hoverable *,
+.cursor--primary,
+.cursor--secondary,
+.tr__magnetic * {
+  animation-play-state: running !important;
+  will-change: transform !important;
+}

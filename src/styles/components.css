@@ -1,0 +1,325 @@
+/* globals.css - COMPLETE TRIONN-STYLE OPTIMIZED (CURSOR FIXED) */
+
+/* ==========================================================================
+   BASE & RESET
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #000;
+  color: #fff;
+}
+
+/* ==========================================================================
+   CURSOR INTEGRATION - FIXED (React Compatible)
+   ========================================================================== */
+body.loading,
+body.cursor-none {
+  cursor: none !important;
+}
+
+/* ✅ FIXED: NO GLOBAL cursor: none - React Controls Everything */
+.tr__cursor__hoverable {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  isolation: isolate;
+  will-change: transform;
+}
+
+.tr__cursor__hoverable.cursor-hovered {
+  transform: scale(1.05) !important;
+  filter: drop-shadow(0 25px 50px rgba(255, 147, 0, 0.4)) brightness(1.1) !important;
+}
+
+/* 🎯 Cursor elements (React Managed - Highest Priority) */
+.cursor--primary,
+.cursor--secondary {
+  position: fixed !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
+  contain: layout style paint !important;
+  will-change: transform !important;
+  transform: translateZ(0) !important; /* GPU Acceleration */
+}
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+.tr__header {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  isolation: isolate;
+  z-index: 100;
+}
+
+.tr__header:not(.scrolled) {
+  background: transparent;
+}
+
+/* ==========================================================================
+   SECTION TITLES
+   ========================================================================== */
+.tr__section__title h3 {
+  font-variation-settings: 'wght' 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+/* ==========================================================================
+   CARDS & BLOCKS
+   ========================================================================== */
+.tr__work,
+.tr__home__achieved__block {
+  isolation: isolate;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   HOVER EFFECTS
+   ========================================================================== */
+.group-hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+.group-hover\:brightness-110:hover {
+  filter: brightness(1.1);
+}
+
+/* ==========================================================================
+   IMAGE HOVER (Cursor Compatible)
+   ========================================================================== */
+.tr__work__image,
+.tr__home__dribbble__post {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.tr__work__image img,
+.tr__home__dribbble__post img {
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              filter 0.5s ease;
+  will-change: transform, filter;
+}
+
+.tr__work__image:hover img,
+.tr__home__dribbble__post:hover img,
+.tr__cursor__hoverable:hover img {
+  transform: scale(1.12) !important;
+  filter: brightness(1.18) contrast(1.08);
+}
+
+/* ==========================================================================
+   BUTTONS (Cursor Compatible)
+   ========================================================================== */
+.button {
+  position: relative;
+  z-index: 10;
+  isolation: isolate;
+}
+
+.button > span:last-child {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: -1;
+}
+
+.button:hover > span:last-child {
+  opacity: 1;
+}
+
+/* ==========================================================================
+   SOCIAL LINKS
+   ========================================================================== */
+.tr__social__item {
+  transition: all 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  will-change: transform;
+}
+
+.tr__social__item:hover {
+  transform: translateX(24px) scale(1.05);
+}
+
+/* ==========================================================================
+   LOADER SPECIFIC
+   ========================================================================== */
+.loader-stagger > div {
+  animation: loaderStagger 0.35s ease-out forwards;
+}
+
+@keyframes loaderStagger {
+  0% { 
+    opacity: 0; 
+    transform: scale(0.6) translateY(20px); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: scale(1) translateY(0); 
+  }
+}
+
+/* ==========================================================================
+   CLIENTS SLIDER
+   ========================================================================== */
+.tr__clients__says__slide {
+  scroll-snap-align: start;
+  scroll-margin: 2rem;
+}
+
+/* ==========================================================================
+   DRIBBBLE GRID
+   ========================================================================== */
+.tr__home__dribbble__posts {
+  column-gap: 2.5rem;
+  row-gap: 2rem;
+  column-fill: balance;
+}
+
+/* ==========================================================================
+   FOOTER
+   ========================================================================== */
+.tr__footer__masking {
+  mix-blend-mode: screen;
+  isolation: isolate;
+}
+
+/* ==========================================================================
+   CANVAS & SMOKE TRAIL OPTIMIZATIONS
+   ========================================================================== */
+canvas:not(.cursor--primary):not(.cursor--secondary) {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1 !important;
+  pointer-events: none !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE IMPROVEMENTS
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .tr__container { @apply px-6; }
+}
+
+@media (max-width: 768px) {
+  .tr__container { @apply px-4; }
+  
+  .text-balance { text-wrap: balance; }
+  
+  .tr__cursor__hoverable.cursor-hovered {
+    transform: scale(1.02) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .tr__container { @apply px-3; }
+}
+
+/* ==========================================================================
+   DARK MODE ENHANCEMENTS
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --tw-ring-color: rgba(255, 165, 0, 0.6);
+    --tw-ring-offset-shadow: 0 0 transparent;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION (Cursor Safe)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .tr__magnetic,
+  .tr__cursor__hoverable {
+    transform: none !important;
+  }
+  
+  .tr__cursor__hoverable.cursor-hovered {
+    filter: brightness(1.1) !important;
+    transform: scale(1.02) !important;
+  }
+}
+
+/* ==========================================================================
+   PRINT OPTIMIZATION
+   ========================================================================== */
+@media print {
+  .tr__cursor__hoverable,
+  canvas:not(.cursor--primary):not(.cursor--secondary) {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   HIGH DPI / RETINA
+   ========================================================================== */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .tr__work__image img,
+  .tr__home__dribbble__post img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* ==========================================================================
+   SCROLLBAR CUSTOMIZATION
+   ========================================================================== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 15, 32, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff8f00, #ff1493);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff7b00, #ff006e);
+}
+
+/* ==========================================================================
+   CURSOR-SAFE ANIMATION FIXES (Critical!)
+   ========================================================================== */
+.tr__cursor__hoverable *,
+.cursor--primary,
+.cursor--secondary {
+  animation-play-state: running !important;
+  will-change: transform !important;
+}
+
+/* 📱 Touch device safety */
+@media (hover: none) and (pointer: coarse) {
+  .tr__cursor__hoverable {
+    transition-duration: 0.1s !important;
+  }
+  
+  .cursor--primary,
+  .cursor--secondary {
+    display: none !important;
+  }
+}

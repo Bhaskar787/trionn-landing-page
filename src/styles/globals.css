@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* ==========================================================================
+   TRIONN GLOBAL MASTER (CURSOR FIXED + PERFECT)
+   ========================================================================== */
+
+/* Reset & Base Styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #000;
+  color: #fff;
+  line-height: 1.6;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+#root {
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%);
+  border-radius: 10px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #ff5252 0%, #ff8f00 100%);
+}
+
+/* Selection Styles */
+::selection {
+  background: linear-gradient(90deg, #ff6b6b, #ffa500);
+  color: #fff;
+  text-shadow: none;
+}
+
+/* ==========================================================================
+   CURSOR SYSTEM (React-Controlled - FIXED)
+   ========================================================================== */
+/* ✅ FIXED: NO GLOBAL cursor: none - React Handles */
+.tr__cursor__hoverable {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  isolation: isolate;
+  will-change: transform;
+}
+
+.tr__cursor__hoverable.cursor-hovered {
+  transform: scale(1.05) !important;
+  filter: brightness(1.2) drop-shadow(0 20px 40px rgba(255,147,0,0.4)) !important;
+}
+
+/* 🎯 Cursor Elements (React Managed) */
+.cursor--primary,
+.cursor--secondary {
+  position: fixed !important;
+  pointer-events: none !important;
+  z-index: 99999 !important;
+  user-select: none;
+  contain: layout style paint !important;
+  will-change: transform !important;
+  transform: translateZ(0) !important;
+}
+
+/* ==========================================================================
+   SMOOTH ANIMATIONS (Cursor Safe)
+   ========================================================================== */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255, 107, 107, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(255, 107, 107, 0.6), 0 0 60px rgba(255, 165, 0, 0.4); }
+}
+
+/* Utility Classes */
+.fade-in-up { animation: fadeInUp 1s ease-out forwards; }
+.fade-in-scale { animation: fadeInScale 0.8s ease-out forwards; }
+.float { animation: float 3s ease-in-out infinite; }
+.shimmer { 
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s linear infinite;
+}
+.pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+
+/* Layout Utilities */
+.tr__container { @apply max-w-7xl mx-auto px-4 lg:px-8; }
+.line { @apply h-px bg-gradient-to-r from-transparent via-white to-transparent; }
+
+/* Button Enhancements */
+.button {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.6s;
+  z-index: 1;
+}
+
+.button:hover::before { left: 100%; }
+
+/* Magnetic Effect */
+.tr__magnetic {
+  position: relative;
+  contain: layout style paint;
+}
+
+.tr__magnetic * { will-change: transform; }
+
+/* Loader Animations */
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+.overlay__path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: dash 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Marquee */
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0%); }
+}
+
+.animate-marquee { animation: marquee 25s linear infinite; }
+.animate-marquee-reverse { animation: marquee-reverse 25s linear infinite; }
+
+/* Background Grid Pattern */
+.bg-grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Glassmorphism */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Text */
+.text-balance { text-wrap: balance; }
+
+/* ==========================================================================
+   RESPONSIVE + SAFETY (Cursor Perfect)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .tr__cursor__hoverable.cursor-hovered {
+    transform: scale(1.02) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr__cursor__hoverable.cursor-hovered {
+    transform: scale(1.02) !important;
+    filter: brightness(1.1) !important;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print, .cursor--primary, .cursor--secondary { display: none !important; }
+}
+
+/* ==========================================================================
+   MOBILE TOUCH SAFETY (Critical!)
+   ========================================================================== */
+@media (hover: none) and (pointer: coarse) {
+  .tr__cursor__hoverable {
+    transition-duration: 0.1s !important;
+  }
+  
+  .cursor--primary,
+  .cursor--secondary {
+    display: none !important;
+  }
+}
+
+/* ==========================================================================
+   CURSOR-SAFE ANIMATION FIX (Critical!)
+   ========================================================================== */
+.tr__cursor__hoverable *,
+.cursor--primary,
+.cursor--secondary {
+  animation-play-state: running !important;
+  will-change: transform !important;
+}

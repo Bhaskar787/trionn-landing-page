@@ -1,0 +1,340 @@
+/* ==========================================================================
+   ANIMATIONS.css - TRIONN ENHANCED (Cursor Safe)
+   ========================================================================== */
+
+/* ==========================================================================
+   STAGGERED ANIMATIONS (Cursor Compatible)
+   ========================================================================== */
+.stagger-children > * {
+  opacity: 0;
+  transform: translateY(30px);
+  isolation: isolate;
+}
+
+.stagger-children.animate > *:nth-child(1) { 
+  animation: staggerItem 0.7s ease-out 0.15s forwards; 
+}
+.stagger-children.animate > *:nth-child(2) { 
+  animation: staggerItem 0.7s ease-out 0.3s forwards; 
+}
+.stagger-children.animate > *:nth-child(3) { 
+  animation: staggerItem 0.7s ease-out 0.45s forwards; 
+}
+.stagger-children.animate > *:nth-child(4) { 
+  animation: staggerItem 0.7s ease-out 0.6s forwards; 
+}
+.stagger-children.animate > *:nth-child(5) { 
+  animation: staggerItem 0.7s ease-out 0.75s forwards; 
+}
+.stagger-children.animate > *:nth-child(6) { 
+  animation: staggerItem 0.7s ease-out 0.9s forwards; 
+}
+
+@keyframes staggerItem {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   FLOATING ELEMENTS (Cursor Safe)
+   ========================================================================== */
+.float-1 { 
+  animation: float 5s ease-in-out infinite; 
+}
+.float-2 { 
+  animation: float 5s ease-in-out infinite 1.25s; 
+}
+.float-3 { 
+  animation: float 5s ease-in-out infinite 2.5s; 
+}
+.float-4 { 
+  animation: float 5s ease-in-out infinite 3.75s; 
+}
+
+@keyframes float {
+  0%, 100% { 
+    transform: translateY(0px) rotate(0deg); 
+  }
+  33% { 
+    transform: translateY(-10px) rotate(1.5deg); 
+  }
+  66% { 
+    transform: translateY(-5px) rotate(-1deg); 
+  }
+}
+
+/* ==========================================================================
+   PULSE EFFECTS
+   ========================================================================== */
+.pulse-ring {
+  animation: pulse-ring 2.2s infinite;
+  position: relative;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.8);
+  }
+  40% {
+    box-shadow: 0 0 0 20px rgba(255, 107, 107, 0.2);
+  }
+  70% {
+    box-shadow: 0 0 0 35px rgba(255, 107, 107, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 107, 107, 0);
+  }
+}
+
+/* ==========================================================================
+   TEXT REVEAL (Cursor Compatible)
+   ========================================================================== */
+.text-reveal {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.text-reveal::before {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  animation: textReveal 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  z-index: 1;
+}
+
+@keyframes textReveal {
+  0% { 
+    width: 0; 
+  }
+  50% { 
+    width: 70%; 
+  }
+  100% { 
+    width: 100%; 
+  }
+}
+
+/* ==========================================================================
+   GRADIENT TEXT
+   ========================================================================== */
+.gradient-text {
+  background: linear-gradient(135deg, 
+    #ff6b6b 0%, 
+    #ffa500 30%, 
+    #ff1493 60%, 
+    #4ecdc4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+}
+
+/* ==========================================================================
+   BACKGROUND FLOATERS
+   ========================================================================== */
+.floater {
+  position: absolute;
+  pointer-events: none;
+  animation: float-large 8s ease-in-out infinite;
+  z-index: 0;
+}
+
+.floater:nth-child(1) { animation-delay: 0s; }
+.floater:nth-child(2) { animation-delay: 2s; }
+.floater:nth-child(3) { animation-delay: 4s; }
+.floater:nth-child(4) { animation-delay: 6s; }
+
+@keyframes float-large {
+  0%, 100% { 
+    transform: translateY(0px) scale(1); 
+  }
+  25% { 
+    transform: translateY(-15px) scale(1.02); 
+  }
+  75% { 
+    transform: translateY(-8px) scale(0.98); 
+  }
+}
+
+/* ==========================================================================
+   PARALLAX (Cursor Safe)
+   ========================================================================== */
+.parallax {
+  will-change: transform;
+  contain: layout style paint;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   LOADING SKELETON
+   ========================================================================== */
+.skeleton {
+  background: linear-gradient(90deg, 
+    #1a1a1a 25%, 
+    #2a2a2a 50%, 
+    #1a1a1a 75%);
+  background-size: 200% 100%;
+  animation: loading 1.8s infinite;
+  border-radius: 8px;
+}
+
+@keyframes loading {
+  0% { 
+    background-position: 200% 0; 
+  }
+  100% { 
+    background-position: -200% 0; 
+  }
+}
+
+/* ==========================================================================
+   SECTION REVEAL
+   ========================================================================== */
+.section-reveal {
+  opacity: 0;
+  transform: translateY(60px);
+}
+
+.section-reveal.animated {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ==========================================================================
+   HERO TEXT EFFECT (Cursor Compatible)
+   ========================================================================== */
+.hero-text {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero-text::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255,255,255,0.25), 
+    transparent);
+  transition: left 0.8s ease;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-text:hover::after {
+  left: 100%;
+}
+
+/* ==========================================================================
+   CARD FLIP (Cursor Compatible)
+   ========================================================================== */
+.card-flip {
+  perspective: 1200px;
+  height: 100%;
+}
+
+.card-flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.card-flip:hover .card-flip-inner {
+  transform: rotateY(180deg);
+}
+
+.card-flip-front,
+.card-flip-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: inherit;
+}
+
+.card-flip-back {
+  transform: rotateY(180deg);
+}
+
+/* ==========================================================================
+   RESPONSIVE ANIMATIONS
+   ========================================================================== */
+@media (max-width: 768px) {
+  .stagger-children.animate > * {
+    animation-duration: 0.5s !important;
+  }
+  
+  .float,
+  .floater {
+    animation-duration: 3s !important;
+  }
+  
+  .pulse-ring {
+    animation-duration: 1.5s !important;
+  }
+}
+
+/* ==========================================================================
+   REDUCED MOTION SAFETY
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .stagger-children > *,
+  .float,
+  .floater,
+  .pulse-ring,
+  .text-reveal::before,
+  .section-reveal,
+  .hero-text::after,
+  .card-flip-inner {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  /* Keep subtle feedback */
+  .tr__cursor__hoverable.cursor-hovered {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+  }
+}
+
+/* ==========================================================================
+   HIGH PERFORMANCE
+   ========================================================================== */
+.parallax,
+.card-flip,
+.tr__magnetic,
+.tr__cursor__hoverable {
+  contain: layout style paint;
+}
+
+/* ==========================================================================
+   PRINT OPTIMIZATION
+   ========================================================================== */
+@media print {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .section-reveal,
+  .stagger-children > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
